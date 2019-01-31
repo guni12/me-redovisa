@@ -56,52 +56,8 @@ module.exports = (function () {
     }
 
 
-
-
-    function hashbcryptjs(req, res) {
-        const bcryptjs = require('bcryptjs');
-        const simplepw = req.body.password;
-        const email = req.body.email;
-
-        bcryptjs.genSalt(saltRounds, function(err, salt) {
-            bcryptjs.hash(simplepw, salt, function(err, hash) {
-                if (err) {
-                    return res.status(500).json({
-                        errors: {
-                            status: 500,
-                            source: "/register",
-                            title: "bcrypt error",
-                            detail: "bcrypt error"
-                        }
-                    });
-                }
-
-                db.run("INSERT INTO users (email, password) VALUES (?, ?)",
-                    email,
-                    hash, (err) => {
-                    if (err) {
-                        return res.status(500).json({
-                            errors: {
-                                status: 500,
-                                source: "/register",
-                                title: "Database error",
-                                detail: err.message
-                            }
-                        });
-                    }
-                });
-                res.status(201).json({
-                    data: {
-                        message: "User " + email + " successfully registered with: ." + hash
-                    }
-                });
-            });
-        });
-    }
-
 return {
         hashbcrypt: hashbcrypt,
-        hashbcryptjs: hashbcryptjs,
     };
 }());
 
