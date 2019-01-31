@@ -6,8 +6,8 @@ module.exports = (function () {
 
     function hashbcrypt(req, res) {
         const bcrypt = require('bcrypt');
-        const simplepw = req.query.password;
-        const email = req.query.email;
+        const simplepw = req.body.password;
+        const email = req.body.email;
 
         if (!email || !simplepw) {
             return res.status(401).json({
@@ -60,8 +60,8 @@ module.exports = (function () {
 
     function hashbcryptjs(req, res) {
         const bcryptjs = require('bcryptjs');
-        const simplepw = req.query.password;
-        const email = req.query.email;
+        const simplepw = req.body.password;
+        const email = req.body.email;
 
         bcryptjs.genSalt(saltRounds, function(err, salt) {
             bcryptjs.hash(simplepw, salt, function(err, hash) {
