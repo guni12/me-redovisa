@@ -1,17 +1,19 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET users listing. */
-router.get('/', function(req, res, next) {
-    res.send('Redovisning');
-});
+const reports = require('../public/javascripts/reports.js');
+const auth = require('../public/javascripts/login.js');
 
-router.get('/:kmom', function (req, res, next) {
-    var addr = '../public/javascripts/' + req.params.kmom + '.js';
+router.post("/",
+    (req, res, next) => auth.checkToken(req, res, next),
+    (req, res) => reports.addReport(res, req.body));
 
-    const data = require(addr);
-    var questions = data.questions.find();
-    res.json(questions);
-})
+router.post("/update",
+    (req, res, next) => auth.checkToken(req, res, next),
+    (req, res) => reports.updateReport(res, req.body));
+
+router.get('/:kmom',
+    (req, res) => reports.getReport(req, res));
+
 
 module.exports = router;

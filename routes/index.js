@@ -1,14 +1,10 @@
 var express = require('express');
 var router = express.Router();
+const me = require('../public/javascripts/index.js');
 
-/* GET home page. */
 router.get('/', function(req, res, next) {
-    //res.render('index', { title: 'Express' });
 
-    var addr = '../public/javascripts/index.js';
-
-    const file = require(addr);
-    var info = file.info.find();
+    var info = me.info.find();
     res.json(info);
 });
 
