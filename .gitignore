@@ -1,3 +1,6 @@
 node_modules/
 *.sqlite
 git/
+coverage/
+.nyc_output/
+build/

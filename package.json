@@ -6,8 +6,13 @@
   "scripts": {
     "start": "node ./bin/www",
     "production": "NODE_ENV='production' node app.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "exdeb": "DEBUG=redovisa:* npm start"
+    "test": "nyc --reporter=html --reporter=text mocha 'test/**/*.js'",
+    "docker-latest": "docker-compose run node_alpine npm test",
+    "docker-10": "docker-compose run node_10_alpine npm test",
+    "docker-8": "docker-compose run node_8_alpine npm test",
+    "docker-6": "docker-compose run node_6_alpine npm test",
+    "exdeb": "DEBUG=redovisa:* npm start",
+    "eslint": "eslint ."
   },
   "dependencies": {
     "bcrypt": "^3.0.3",
@@ -19,6 +24,18 @@
     "jsonwebtoken": "^8.4.0",
     "morgan": "~1.9.1",
     "pug": "2.0.0-beta11",
-    "sqlite3": "^4.0.6"
+    "sqlite3": "^4.0.6",
+    "test": "^0.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.13.0",
+    "eslint-plugin-flowtype": "^3.2.1",
+    "eslint-plugin-import": "^2.16.0",
+    "eslint-plugin-jsx-a11y": "^6.2.1",
+    "eslint-plugin-react": "^7.12.4",
+    "eslint-plugin-vue": "^5.1.0",
+    "javascript-style-guide": "^0.9.10",
+    "mocha": "^5.2.0",
+    "nyc": "^13.2.0"
   }
 }

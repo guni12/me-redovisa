@@ -1,0 +1,17 @@
+{
+    "description": "",
+    "reporter": [
+        "html"
+    ],
+    "include": [
+      "src/**/*.js"
+    ],
+    "exclude": [
+      "coverage/",
+      "build/",
+      "test/"
+    ],
+    "all": true,
+    "report-dir": "./build/coverage",
+    "temp-directory": "./build/.nyc_output"
+}
