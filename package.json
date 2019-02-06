@@ -13,6 +13,7 @@
     "docker-6": "docker-compose run node_6_alpine npm test",
     "exdeb": "DEBUG=redovisa:* npm start",
     "eslint": "eslint .",
+    "test-scrutinizer": "nyc --all --reporter=clover mocha test/**/*.js",
     "report-coveralls": "nyc report --reporter=text-lcov | coveralls",
     "report-codecov": "nyc report --reporter=lcov > coverage.lcov && codecov"
   },
