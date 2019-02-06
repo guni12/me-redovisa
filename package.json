@@ -12,7 +12,9 @@
     "docker-8": "docker-compose run node_8_alpine npm test",
     "docker-6": "docker-compose run node_6_alpine npm test",
     "exdeb": "DEBUG=redovisa:* npm start",
-    "eslint": "eslint ."
+    "eslint": "eslint .",
+    "report-coveralls": "nyc report --reporter=text-lcov | coveralls",
+    "report-codecov": "nyc report --reporter=lcov > coverage.lcov && codecov"
   },
   "dependencies": {
     "bcrypt": "^3.0.3",
@@ -28,6 +30,8 @@
     "test": "^0.6.0"
   },
   "devDependencies": {
+    "codecov": "^3.1.0",
+    "coveralls": "^3.0.2",
     "eslint": "^5.13.0",
     "eslint-plugin-flowtype": "^3.2.1",
     "eslint-plugin-import": "^2.16.0",
