@@ -4,12 +4,10 @@
         "html"
     ],
     "include": [
-      "src/**/*.js"
+      "public/**/*.js"
     ],
     "exclude": [
-      "coverage/",
-      "build/",
-      "test/"
+      "coverage/"
     ],
     "all": true,
     "report-dir": "./build/coverage",
