@@ -32,9 +32,19 @@ describe('Register and login user', () => {
             console.log("Could not create test DB users", err.message);
         });
 
+
         db.run("DELETE FROM users", (err) => {
             if (err) {
                 console.log("Could not empty test DB users", err.message);
+            }
+            console.log("I before - register");
+        });
+
+        sql2 = 'INSERT INTO users (email, password)' +
+            ' VALUES ("test@example.com", "123test");';
+        db.run(sql2, (err) => {
+            if (err) {
+                console.log("Could not insert test DB users", err.message);
             }
             console.log("I before - register");
         });
