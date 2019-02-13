@@ -20,6 +20,7 @@
     "report-codecov": "nyc report --reporter=lcov > coverage.lcov && codecov"
   },
   "dependencies": {
+    "acorn": "^6.1.0",
     "bcrypt": "^3.0.3",
     "cookie-parser": "~1.4.3",
     "cors": "^2.8.5",

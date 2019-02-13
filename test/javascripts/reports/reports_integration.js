@@ -33,26 +33,6 @@ describe('reports', () => {
 
         this.cont = '[{"question": "Varför","answer": ["Därför."]}]';
 
-        db.run("DROP TABLE texts", (err) => {
-            if (err) {
-                console.log("Could not drop DB texts", err.message);
-            }
-            console.log("Inside db drop");
-        });
-
-        var sql = "CREATE TABLE IF NOT EXISTS texts" +
-            "(kmom VARCHAR(60) NOT NULL,json VARCHAR(10000) " +
-            "NOT NULL,UNIQUE(kmom))";
-
-        db.run(
-            sql,
-            (err) => {
-                if (err) {
-                    console.log("Could not create DB texts", err.message);
-                }
-                console.log("Inside db create");
-            });
-
         db.run("DELETE FROM texts", (err) => {
             if (err) {
                 console.log("Could not empty test DB texts", err.message);
