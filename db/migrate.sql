@@ -1,9 +1,12 @@
+DROP TABLE IF EXISTS users;
+
 CREATE TABLE IF NOT EXISTS users (
     email VARCHAR(255) NOT NULL,
     password VARCHAR(60) NOT NULL,
     UNIQUE(email)
 );
 
+DROP TABLE IF EXISTS texts;
 
 CREATE TABLE IF NOT EXISTS texts (
     kmom VARCHAR(60) NOT NULL,
