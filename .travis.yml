@@ -1,8 +1,5 @@
 language: node_js
 
-services:
-    - sqlite3
-
 node_js:
     - "node"
     - "10"
