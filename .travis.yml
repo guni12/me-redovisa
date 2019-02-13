@@ -1,5 +1,11 @@
 language: node_js
 
+services:
+    - sqlite3
+
+before_install:
+    sqlite3 db/test.sqlite < db/migrate.sql
+
 node_js:
     - "node"
     - "10"
@@ -20,9 +26,3 @@ script:
 after_success:
     - npm run report-coveralls
     - npm run report-codecov
-
-services:
-    - sqlite3
-
-before_install:
-    sqlite3 db/test.sqlite < db/migrate.sql
