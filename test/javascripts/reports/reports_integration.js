@@ -54,6 +54,7 @@ describe('reports', () => {
                 done();
             });
     });
+
     describe('GET /reports/kmom01', () => {
         it('201 HAPPY PATH json', (done) => {
             chai.request(server)
