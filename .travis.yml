@@ -16,6 +16,7 @@ before_script:
 
 script:
     - npm run pretest
+    sudo chmod +x db
     - npm test
 
 after_success:

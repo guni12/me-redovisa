@@ -35,7 +35,9 @@ jobs:
 
       - run:
           name: prepare
-          command: npm run pretest
+          command: |
+            sudo chmod +x db
+            npm run pretest
 
       - run: # run tests
           name: test
