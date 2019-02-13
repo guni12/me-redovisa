@@ -9,7 +9,7 @@ module.exports = (function () {
         const simplepw = req.body.password;
         const email = req.body.email;
 
-        console.log(req.body);
+        //console.log(req.body);
 
         if (!email || !simplepw) {
             return res.status(401).json({
@@ -51,6 +51,7 @@ module.exports = (function () {
 
                 bcrypt.compare(simplepw, user.password, (err, result) => {
                     if (err) {
+                        //console.log("I compare", err);
                         return res.status(500).json({
                             errors: {
                                 status: 500,
@@ -95,7 +96,7 @@ module.exports = (function () {
     function checkToken(req, res, next) {
         var token = req.headers['x-access-token'];
 
-        console.log(req.headers, token);
+        //console.log(req.headers, token);
 
         if (token) {
             jwt.verify(token, process.env.JWT_SECRET, function(err, decoded) {

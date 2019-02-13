@@ -6,7 +6,7 @@ module.exports = (function () {
         const kmom = body.kmom;
         const json = body.json;
 
-        console.log(body);
+        //console.log("I reports.js", body);
 
         if (!kmom || !json) {
             return res.status(401).json({
@@ -32,20 +32,20 @@ module.exports = (function () {
                         }
                     });
                 }
-            });
 
-        res.status(201).json({
-            data: {
-                message: kmom + " with content: " + json
-            }
-        });
+                res.status(201).json({
+                    data: {
+                        message: kmom + " with content: " + json
+                    }
+                });
+            });
     }
 
 
     function getReport(req, res) {
         var kmom = req.params.kmom;
 
-        console.log(kmom);
+        //console.log(kmom);
 
         db.get("SELECT * FROM texts WHERE kmom = ?",
             kmom,
@@ -89,14 +89,13 @@ module.exports = (function () {
         let text = body.json;
 
         console.log(kmom);
-
-        console.log(body);
+        console.log("I reports.js", body);
 
         if (!kmom || !text) {
             return res.status(401).json({
                 errors: {
                     status: 401,
-                    source: "/reports",
+                    source: "/update",
                     title: "Kmom or json missing",
                     detail: "Kmom or json missing in request"
                 }

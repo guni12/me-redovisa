@@ -31,7 +31,6 @@ module.exports = (function () {
                 });
             }
 
-
             db.run("INSERT INTO users (email, password) VALUES (?, ?)",
                 email,
                 hash, (err) => {
@@ -45,12 +44,13 @@ module.exports = (function () {
                             }
                         });
                     }
+
+                    res.status(201).json({
+                        data: {
+                            message: "User " + email + " successfully registered with: ." + hash
+                        }
+                    });
                 });
-            res.status(201).json({
-                data: {
-                    message: "User " + email + " successfully registered with: ." + hash
-                }
-            });
         });
     }
 

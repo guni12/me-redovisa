@@ -6,14 +6,16 @@
   "scripts": {
     "start": "node ./bin/www",
     "production": "NODE_ENV='production' node app.js",
-    "test": "nyc --reporter=html --reporter=text mocha 'test/**/*.js'",
+    "test": "nyc --reporter=html --reporter=text mocha 'test/javascripts/**/*.js'",
+    "test-cw": "nyc --reporter=html --reporter=text mocha \"test/javascripts/**/*.js\"",
+    "clean": "rm -rf npm-debug.log coverage .nyc_output",
     "docker-latest": "docker-compose run node_alpine npm test",
     "docker-10": "docker-compose run node_10_alpine npm test",
     "docker-8": "docker-compose run node_8_alpine npm test",
     "docker-6": "docker-compose run node_6_alpine npm test",
     "exdeb": "DEBUG=redovisa:* npm start",
     "eslint": "eslint .",
-    "test-scrutinizer": "nyc --all --reporter=clover mocha test/**/*.js",
+    "test-scrutinizer": "nyc --all --reporter=clover mocha test/javascripts/**/*.js",
     "report-coveralls": "nyc report --reporter=text-lcov | coveralls",
     "report-codecov": "nyc report --reporter=lcov > coverage.lcov && codecov"
   },
@@ -31,6 +33,8 @@
     "test": "^0.6.0"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-http": "^4.2.1",
     "codecov": "^3.1.0",
     "coveralls": "^3.0.2",
     "eslint": "^5.13.0",
