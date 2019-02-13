@@ -24,6 +24,14 @@ function makeid() {
 
 describe('Register and login user', () => {
     before(() => {
+        sql = "CREATE TABLE IF NOT EXISTS users" + 
+        "(email VARCHAR(255)" +
+        " NOT NULL, password VARCHAR(60) NOT NULL," +
+        "UNIQUE(email));";
+        db.run(sql, (err) => {
+            console.log("Could not create test DB users", err.message);
+        });
+
         db.run("DELETE FROM users", (err) => {
             if (err) {
                 console.log("Could not empty test DB users", err.message);
