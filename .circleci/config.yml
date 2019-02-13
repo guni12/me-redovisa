@@ -35,7 +35,7 @@ jobs:
 
       - run:
           name: prepare
-          command: npm pretest
+          command: npm run pretest
 
       - run: # run tests
           name: test
