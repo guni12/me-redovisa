@@ -12,7 +12,10 @@ const server = require('../../../app.js');
 
 chai.should();
 
-const db = require("../../../db/database.js");
+//const db = require("../../../db/database.js");
+var path = require("path");
+const db = require(path.resolve(__dirname, '../../../db/database.js'));
+console.log(db);
 
 chai.use(chaiHttp);
 
