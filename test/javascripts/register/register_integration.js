@@ -46,7 +46,7 @@ describe('Register and login user', () => {
             ' VALUES ("test@example.com", "123test");';
         db.run(sql2, (err) => {
             if (err) {
-                console.log("Could not insert test DB users", err.message);
+                console.log("Could not insert test DB users", err);
             }
             console.log("I before - register");
         });

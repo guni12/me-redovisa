@@ -49,6 +49,16 @@ describe('reports', () => {
             console.log("Could not create test DB users", err);
         });
 
+
+        sql2 = 'INSERT INTO users (email, password)' +
+            ' VALUES ("test@example.com", "123test");';
+        db.run(sql2, (err) => {
+            if (err) {
+                console.log("Could not insert test DB users", err);
+            }
+            console.log("I before - register");
+        });
+
         let user = {
             email: "test@example.com",
             password: "123test",
