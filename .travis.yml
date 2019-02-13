@@ -20,3 +20,9 @@ script:
 after_success:
     - npm run report-coveralls
     - npm run report-codecov
+
+services:
+    - sqlite3
+
+before_install:
+    sqlite3 db/test.sqlite < db.migrate.sql
