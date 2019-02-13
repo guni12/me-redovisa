@@ -33,13 +33,15 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+
       - run:
           name: Database Setup
-          command: |
-            sudo apt-get install sqlite3
-            sqlite3 db/test.sqlite < db/migrate.sql
+          command: sudo apt-get install sqlite3
 
-      # run tests!
+      - run:
+          name: Sql Setup
+          command: sqlite3 db/test.sqlite < db/migrate.sql
+
       - run: # run tests
           name: test
           command: npm test
