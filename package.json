@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node ./bin/www",
     "production": "NODE_ENV='production' node app.js",
-    "pretest": "$(sudo db/reset_test_db.bash)",
+    "pretest": "sudo $(db/reset_test_db.bash)",
     "test": "nyc --reporter=html --reporter=text mocha 'test/javascripts/**/*.js'",
     "test-cw": "nyc --reporter=html --reporter=text mocha \"test/javascripts/**/*.js\"",
     "clean": "rm -rf npm-debug.log coverage .nyc_output",
