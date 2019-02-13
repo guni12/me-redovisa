@@ -33,6 +33,10 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
+      - run:
+          name: prepare
+          command: npm pretest
+
       - run: # run tests
           name: test
           command: npm test
