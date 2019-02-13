@@ -40,6 +40,15 @@ describe('reports', () => {
             console.log("Inside db delete");
         });
 
+        sql = "CREATE TABLE IF NOT EXISTS users" + 
+        "(email VARCHAR(255)" +
+        " NOT NULL, password VARCHAR(60) NOT NULL, " +
+        "UNIQUE(email));";
+
+        db.run(sql, (err) => {
+            console.log("Could not create test DB users", err);
+        });
+
         let user = {
             email: "test@example.com",
             password: "123test",

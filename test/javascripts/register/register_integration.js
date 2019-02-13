@@ -24,23 +24,25 @@ function makeid() {
 
 describe('Register and login user', () => {
     before(() => {
-        sql = "CREATE TABLE IF NOT EXISTS users" + 
+
+    sql = "CREATE TABLE IF NOT EXISTS users" + 
         "(email VARCHAR(255)" +
-        " NOT NULL, password VARCHAR(60) NOT NULL," +
+        " NOT NULL, password VARCHAR(60) NOT NULL, " +
         "UNIQUE(email));";
-        db.run(sql, (err) => {
-            console.log("Could not create test DB users", err.message);
+
+    db.run(sql, (err) => {
+            console.log("Could not create test DB users", err);
         });
 
-
-        db.run("DELETE FROM users", (err) => {
+    db.run("DELETE FROM users", (err) => {
             if (err) {
                 console.log("Could not empty test DB users", err.message);
             }
             console.log("I before - register");
         });
+    });
 
-        sql2 = 'INSERT INTO users (email, password)' +
+    sql2 = 'INSERT INTO users (email, password)' +
             ' VALUES ("test@example.com", "123test");';
         db.run(sql2, (err) => {
             if (err) {
@@ -48,8 +50,6 @@ describe('Register and login user', () => {
             }
             console.log("I before - register");
         });
-    });
-
 
     describe('POST /register', () => {
         it('1. should get 401 as we do not provide valid password', (done) => {
