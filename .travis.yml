@@ -25,4 +25,4 @@ services:
     - sqlite3
 
 before_install:
-    sqlite3 db/test.sqlite < db.migrate.sql
+    sqlite3 db/test.sqlite < db/migrate.sql

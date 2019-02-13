@@ -29,9 +29,8 @@ function makeid() {
 
 describe('reports', () => {
     before((done) => {
-        let token = "";
         process.env.JWT_SECRET = 'secret';
-        let cont = "";
+
         this.cont = '[{"question": "Varför","answer": ["Därför."]}]';
 
         db.run("DROP TABLE texts", (err) => {
@@ -41,14 +40,18 @@ describe('reports', () => {
             console.log("Inside db drop");
         });
 
+        var sql = "CREATE TABLE IF NOT EXISTS texts" +
+            "(kmom VARCHAR(60) NOT NULL,json VARCHAR(10000) " +
+            "NOT NULL,UNIQUE(kmom))";
+
         db.run(
-            "CREATE TABLE IF NOT EXISTS texts (kmom VARCHAR(60) NOT NULL,json VARCHAR(10000) NOT NULL,UNIQUE(kmom))",
+            sql,
             (err) => {
                 if (err) {
                     console.log("Could not create DB texts", err.message);
                 }
                 console.log("Inside db create");
-            })
+            });
 
         db.run("DELETE FROM texts", (err) => {
             if (err) {
@@ -67,10 +70,7 @@ describe('reports', () => {
             .send(user)
             .end((err, res) => {
                 res.should.have.status(200);
-                //console.log(res.body);
-                //console.log(res.body.data.token);
                 this.token = res.body.data.token;
-                //console.log("token i before överst: ", this.token);
                 done();
             });
     });
@@ -124,6 +124,7 @@ describe('reports', () => {
             email: "test@example.com",
             password: "123test",
         };
+
         before((done) => {
             chai.request(server)
                 .post('/login')
@@ -139,11 +140,13 @@ describe('reports', () => {
                 }
             });
         });
+
         it('1. 401', (done) => {
             let text = {
                 kmom: "",
                 json: this.cont,
             };
+
             chai.request(server)
                 .post("/reports")
                 .send(text)
@@ -166,8 +169,9 @@ describe('reports', () => {
             };
             let storedtoken = "test";
             let headers = {
-'Content-Type': 'application/x-www-form-urlencoded',
-'x-access-token': storedtoken};
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'x-access-token': storedtoken};
+
             chai.request(server)
                 .post("/reports")
                 .set(headers)
@@ -177,7 +181,7 @@ describe('reports', () => {
                     //console.log(res.body);
                     res.body.should.be.an("object");
                     res.body.errors.status.should.be.eql(500);
-                    res.body.errors.title.should.be.eql("Failed authentication")
+                    res.body.errors.title.should.be.eql("Failed authentication");
 
                     done();
                 });
@@ -206,8 +210,9 @@ describe('reports', () => {
             };
             //console.log("Test 4: ", this.token);
             let headers = {
-'Content-Type': 'application/x-www-form-urlencoded',
-'x-access-token': this.token};
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'x-access-token': this.token};
+
             chai.request(server)
                 .post("/reports")
                 .set(headers)
@@ -247,8 +252,8 @@ describe('reports', () => {
                 json: this.cont,
             };
             let headers = {
-'Content-Type': 'application/x-www-form-urlencoded',
-'x-access-token': this.token};
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'x-access-token': this.token};
 
             chai.request(server)
                 .post("/reports")
@@ -263,46 +268,50 @@ describe('reports', () => {
                     done();
                 });
         });
-
+        done();
     });
 
 
-        it('6. 201 HAPPY PATH json', (done) => {
-            before((done) => {
-                chai.request(server)
-                    .post('/login')
-                    .send(user)
-                    .end((err, res) => {
-                        this.token = res.body.data.token;
-                        done();
-                    });
-            });
-
-            let kmom2 = "kmom05";
-            let text = {
-                kmom: kmom2,
-                json: this.cont,
+    it('6. 201 HAPPY PATH json', (done) => {
+        before((done) => {
+            let user = {
+                email: "test@example.com",
+                password: "123test",
             };
-            let headers = {
-'Content-Type': 'application/x-www-form-urlencoded',
-'x-access-token': this.token};
 
             chai.request(server)
-                .post("/reports/update")
-                .set(headers)
-                .send(text)
+                .post('/login')
+                .send(user)
                 .end((err, res) => {
-                    res.should.have.status(201);
-                    console.log(res.body);
-                    res.body.should.be.an("object");
-                    res.body.data.message.should.be.eql("Updated kmom " + kmom2 + " with content: " + this.cont);
-
+                    this.token = res.body.data.token;
                     done();
                 });
+        });
 
+        let kmom2 = "kmom05";
+        let text = {
+            kmom: kmom2,
+            json: this.cont,
+        };
+        let headers = {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'x-access-token': this.token};
+
+        chai.request(server)
+            .post("/reports/update")
+            .set(headers)
+            .send(text)
+            .end((err, res) => {
+                res.should.have.status(201);
+                console.log(res.body);
+                res.body.should.be.an("object");
+                var text = "Updated kmom " + kmom2 + " with content: " + this.cont;
+
+                res.body.data.message.should.be.eql(text);
+
+                done();
+            });
     });
-
-
 });
 
 
@@ -341,5 +350,5 @@ describe("Test kmom02.js files", function() {
 
     after(() => {
         delete process.env.JWT_SECRET;
-    })
+    });
 });
