@@ -36,7 +36,9 @@ jobs:
 
       - run:
           name: Database Setup
-          command: sqlite3 db/test.sqlite < db/migrate.sql
+          command: |
+            sudo apt-get install sqlite3
+            sqlite3 db/test.sqlite < db/migrate.sql
 
       # run tests!
       - run: # run tests
