@@ -119,7 +119,7 @@ describe('reports', () => {
     });
 
 
-    describe('POST publish new kmom', (done) => {
+    describe('POST publish new kmom', () => {
         let user = {
             email: "test@example.com",
             password: "123test",
@@ -268,7 +268,6 @@ describe('reports', () => {
                     done();
                 });
         });
-        done();
     });
 
 
