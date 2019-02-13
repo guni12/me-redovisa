@@ -13,7 +13,6 @@ git:
 
 before_script:
     - npm install
-    sqlite3 db/test.sqlite < db/migrate.sql
 
 script:
     - npm test
