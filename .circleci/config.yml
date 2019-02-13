@@ -33,11 +33,6 @@ jobs:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run:
-          name: prepare
-          command: |
-            sudo chmod +x db
-            npm run pretest
 
       - run: # run tests
           name: test

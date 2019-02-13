@@ -8,6 +8,12 @@ node_js:
 
 sudo: false
 
+services:
+    - sqlite3
+
+before_install:
+    sqlite3 db/test.sqlite < db/migrate.sql
+
 git:
     submodules: false
 
@@ -15,8 +21,6 @@ before_script:
     - npm install
 
 script:
-    - npm run pretest
-    sudo chmod +x db
     - npm test
 
 after_success:
