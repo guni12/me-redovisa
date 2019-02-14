@@ -1,5 +1,7 @@
-const sqlite3 = require('sqlite3').verbose();
-const db = new sqlite3.Database('./db/texts.sqlite');
+//const sqlite3 = require('sqlite3').verbose();
+//const db = new sqlite3.Database('./db/texts.sqlite');
+
+const db = require('../../db/database.js');
 
 module.exports = (function () {
     function addReport(res, body) {
