@@ -35,7 +35,7 @@ jobs:
 
       - run:
           name: permissions
-          command: chown -R $USER:$USER /db
+          command: chown -R $USER:$USER ./db
 
 
       - run: # run tests
