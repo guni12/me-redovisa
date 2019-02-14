@@ -15,13 +15,13 @@ chai.should();
 //const db = require("../../../db/database.js");
 var path = require("path");
 const db = require(path.resolve(__dirname, '../../../db/database.js'));
+
 console.log(db);
 
 chai.use(chaiHttp);
 
 
 let token = '';
-const cont = '[{"question": "Varför","answer": ["Därför."]}]';
 
 function makeToken(name) {
     token = name;
@@ -48,52 +48,105 @@ function makeid() {
 }
 
 describe('Reports before', function() {
-    before(function(done) {
-        process.env.JWT_SECRET = 'secret';
-
-        db.run("DELETE FROM texts", function(err) {
-            if (err) {
-                console.log("Could not empty test DB texts", err.message);
-            }
-            console.log("Inside db delete");
-        });
-
-        sql = "CREATE TABLE IF NOT EXISTS users" + 
-        "(email VARCHAR(255)" +
-        " NOT NULL, password VARCHAR(60) NOT NULL, " +
-        "UNIQUE(email));";
-
-        db.run(sql, function(err) {
-            console.log("Could not create test DB users", err);
-        });
-
-
-        sql2 = 'INSERT INTO users (email, password)' +
-            ' VALUES ("test@example.com", "123test");';
-        db.run(sql2, function(err) {
-            if (err) {
-                console.log("Could not insert test DB users", err);
-            }
-            console.log("I before - register");
-        });
-
-        let user = {
-            email: "test@example.com",
-            password: "123test",
-        };
-
-        this.token = "";
-
-        chai.request(server)
-            .post('/login')
-            .send(user)
-            .end(function(err, res) {
-                res.should.have.status(200);
-                token = res.body.data.token;
-                makeToken(token);
-                console.log("this.token - i end", getToken());
-                done();
+    before(done => {
+        setTimeout(() => {
+            console.log(`First 'before'`);
+            db.run("DROP TABLE IF EXISTS users", (err) => {
+                if (err) {
+                    console.log("Could not DROP test DB users", err.message);
+                }
+                console.log("In before (drop)- reports");
             });
+            done(); //Will be called last
+        }, 1200)
+    });
+
+    before(done => {
+        setTimeout(() => {
+            console.log(`Second 'before'`);
+            db.run("DROP TABLE IF EXISTS users", (err) => {
+                if (err) {
+                    console.log("Could not DROP test DB texts", err.message);
+                }
+                console.log("In before (drop)- reports");
+            });
+            done(); //Will be called last
+        }, 1000)
+    });
+
+    before(done => {
+        setTimeout(() => {
+            console.log(`Third 'before'`);
+            const sql = "CREATE TABLE IF NOT EXISTS users" +
+                "(email VARCHAR(255)" +
+                " NOT NULL, password VARCHAR(60) NOT NULL, " +
+                "UNIQUE(email));";
+
+            db.run(sql, (err) => {
+                if (err) {
+                    console.log("Could not create test DB users", err);
+                }
+                console.log("In before (create)- register");
+            });
+            done();
+        }, 600)
+    });
+
+    before(done => {
+        setTimeout(() => {
+            console.log(`Fourth 'before'`);
+            const sql2 = "CREATE TABLE IF NOT EXISTS texts" + 
+                "(kmom VARCHAR(60) NOT NULL," +
+                " json VARCHAR(10000) NOT NULL, " +
+                "UNIQUE(kmom));";
+
+            db.run(sql2, (err) => {
+                if (err) {
+                    console.log("Could not create test DB users", err);
+                }
+                console.log("In before (create)- register");
+            });
+            done();
+        }, 300)
+    });
+
+    before(function(done) {
+        setTimeout(() => {
+            console.log(`Fifth 'before'`);
+            process.env.JWT_SECRET = 'secret';
+
+            const sql3 = 'INSERT INTO users (email, password)' +
+                ' VALUES ("test@example.com", "123test");';
+            db.run(sql3, function(err) {
+                if (err) {
+                    console.log("Could not insert test DB users", err);
+                }
+                console.log("In before (insert)- reports");
+            });
+            done();
+        }, 200)
+    });
+
+    before(function(done) {
+        setTimeout(() => {
+            console.log(`Sixth 'before'`);
+            let user = {
+                email: "test@example.com",
+                password: "123test",
+            };
+
+            chai.request(server)
+                .post('/login')
+                .send(user)
+                .end(function(err, res) {
+                    res.should.have.status(200);
+                    token = res.body.data.token;
+                    console.log(token);
+                    makeToken(token);
+                    console.log("this.token - i end", getToken());
+                    done();
+                });
+        }, 100)
     });
 
 
@@ -208,7 +261,7 @@ describe('Reports before', function() {
                     .send(text)
                     .end(function(err, res) {
                         res.should.have.status(401);
-                        //console.log(res.body);
+                        console.log(res.body);
                         res.body.should.be.an("object");
                         res.body.errors.status.should.be.eql(401);
                         res.body.errors.title.should.be.eql("Kmom or json missing");
@@ -250,7 +303,7 @@ describe('Reports before', function() {
                 kmom: kmom2,
                 json: getContent(),
             };
-            //console.log(text);
+            console.log(text);
             let headers = {
                 'Content-Type': 'application/x-www-form-urlencoded',
                 'x-access-token': getToken()};
@@ -261,7 +314,7 @@ describe('Reports before', function() {
                 .send(text)
                 .end(function(err, res) {
                     res.should.have.status(201);
-                    //console.log(res.body);
+                    console.log(res.body);
                     res.body.should.be.an("object");
                     var text = "Updated kmom " + kmom2 + " with content: " + getContent();
 
