@@ -7,7 +7,7 @@ const server = require('../../../app.js');
 
 chai.should();
 
-const results = [];
+
 //const db = require("../../../db/database.js");
 var path = require("path");
 const db = require(path.resolve(__dirname, '../../../db/database.js'));
@@ -35,10 +35,10 @@ describe('Register and login user in before', function() {
                 if (err) {
                     console.log("Could not DROP test DB users", err.message);
                 }
-                console.log("In before (drop)- register");
+                console.log("In before (drop users)- register");
             });
             done(); //Will be called last
-        }, 1000)
+        }, 1000);
     });
 
     before(done => {
@@ -53,25 +53,26 @@ describe('Register and login user in before', function() {
                 if (err) {
                     console.log("Could not create test DB users", err);
                 }
-                console.log("In before (create)- register");
+                console.log("In before (create users)- register");
             });
             done();
-        }, 300)
+        }, 300);
     });
 
     before(done => {
         setTimeout(() => {
             console.log(`Third 'before'`);
-            sql2 = 'INSERT INTO users (email, password)' +
+            const sql2 = 'INSERT INTO users (email, password)' +
                 ' VALUES ("test@example.com", "123test");';
+
             db.run(sql2, (err) => {
                 if (err) {
                     console.log("Could not insert test DB users", err);
                 }
-                console.log("In before (insert)- register");
+                console.log("In before (insert users)- register");
             });
             done();
-        }, 100)
+        }, 100);
     });
 
 
@@ -246,5 +247,4 @@ describe('Register and login user in before', function() {
         });
         delete process.env.JWT_SECRET;
     });
-
 });

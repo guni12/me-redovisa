@@ -55,23 +55,23 @@ describe('Reports before', function() {
                 if (err) {
                     console.log("Could not DROP test DB users", err.message);
                 }
-                console.log("In before (drop)- reports");
+                console.log("In before (drop users)- reports");
             });
             done(); //Will be called last
-        }, 1200)
+        }, 1200);
     });
 
     before(done => {
         setTimeout(() => {
             console.log(`Second 'before'`);
-            db.run("DROP TABLE IF EXISTS users", (err) => {
+            db.run("DROP TABLE IF EXISTS texts", (err) => {
                 if (err) {
                     console.log("Could not DROP test DB texts", err.message);
                 }
-                console.log("In before (drop)- reports");
+                console.log("In before (drop texts)- reports");
             });
             done(); //Will be called last
-        }, 1000)
+        }, 1000);
     });
 
     before(done => {
@@ -86,16 +86,16 @@ describe('Reports before', function() {
                 if (err) {
                     console.log("Could not create test DB users", err);
                 }
-                console.log("In before (create)- register");
+                console.log("In before (create users)- register");
             });
             done();
-        }, 600)
+        }, 600);
     });
 
     before(done => {
         setTimeout(() => {
             console.log(`Fourth 'before'`);
-            const sql2 = "CREATE TABLE IF NOT EXISTS texts" + 
+            const sql2 = "CREATE TABLE IF NOT EXISTS texts" +
                 "(kmom VARCHAR(60) NOT NULL," +
                 " json VARCHAR(10000) NOT NULL, " +
                 "UNIQUE(kmom));";
@@ -104,10 +104,10 @@ describe('Reports before', function() {
                 if (err) {
                     console.log("Could not create test DB users", err);
                 }
-                console.log("In before (create)- register");
+                console.log("In before (create texts)- register");
             });
             done();
-        }, 300)
+        }, 300);
     });
 
     before(function(done) {
@@ -117,19 +117,20 @@ describe('Reports before', function() {
 
             const sql3 = 'INSERT INTO users (email, password)' +
                 ' VALUES ("test@example.com", "123test");';
+
             db.run(sql3, function(err) {
                 if (err) {
                     console.log("Could not insert test DB users", err);
                 }
-                console.log("In before (insert)- reports");
+                console.log("In before (insert users)- reports");
             });
             done();
-        }, 200)
+        }, 200);
     });
 
     before(function(done) {
         setTimeout(() => {
-            console.log(`Sixth 'before'`);
+            console.log(`Sixth 'before' - login user`);
             let user = {
                 email: "test@example.com",
                 password: "123test",
@@ -146,13 +147,12 @@ describe('Reports before', function() {
                     console.log("this.token - i end", getToken());
                     done();
                 });
-        }, 100)
+        }, 100);
     });
 
 
 
     describe('Reports starting', function() {
-
         describe('GET /reports/kmom01', function() {
             it('201 HAPPY PATH json', function(done) {
                 chai.request(server)
@@ -289,7 +289,9 @@ describe('Reports before', function() {
                         res.should.have.status(201);
                         //console.log(res.body);
                         res.body.should.be.an("object");
-                        res.body.data.message.should.be.eql(newkmom + " with content: " + getContent());
+                        var txt = newkmom + " with content: " + getContent();
+
+                        res.body.data.message.should.be.eql(txt);
 
                         done();
                     });
@@ -303,6 +305,7 @@ describe('Reports before', function() {
                 kmom: kmom2,
                 json: getContent(),
             };
+
             console.log(text);
             let headers = {
                 'Content-Type': 'application/x-www-form-urlencoded',
@@ -335,7 +338,9 @@ describe('Reports before', function() {
             assert.equal(res, "Vad är din TIL för detta kmom?");
         });
 
-        it("questions.answer should be 'Det var mycket matnyttigt i detta kursmoment.'", function() {
+        var txt = "'Det var mycket matnyttigt i detta kursmoment.'";
+
+        it("questions.answer should be " + txt, function() {
             let que = kmom01.questions.find();
             let res = que[3].answer[0];
 
@@ -343,9 +348,10 @@ describe('Reports before', function() {
         });
     });
 
+    var txt = "'Vilket JavaScript-ramverk valde du och varför?'";
 
     describe("Test kmom02.js files", function() {
-        it("questions.question should be 'Vilket JavaScript-ramverk valde du och varför?'", function() {
+        it("questions.question should be " + txt, function() {
             var que = kmom02.questions.find();
             let res = que[0].question;
 
