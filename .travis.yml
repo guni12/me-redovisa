@@ -12,6 +12,7 @@ services:
     - sqlite3
 
 before_install:
+    chown -R $USER:$USER /db
     sqlite3 ./db/test.sqlite < ./db/migrate.sql
 
 git:
