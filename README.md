@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/guni12/me-redovisa.svg?branch=master)](https://travis-ci.org/guni12/me-redovisa)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/guni12/me-redovisa/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/guni12/me-redovisa/?branch=master)
-[![Code Coverage](https://scrutinizer-ci.com/g/guni12/me-redovisa/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/guni12/me-redovisa/?branch=master)
 [![Build Status](https://scrutinizer-ci.com/g/guni12/me-redovisa/badges/build.png?b=master)](https://scrutinizer-ci.com/g/guni12/me-redovisa/build-status/master)
 [![codecov](https://codecov.io/gh/guni12/me-redovisa/branch/master/graph/badge.svg)](https://codecov.io/gh/guni12/me-redovisa)
  [![Coverage Status](https://coveralls.io/repos/github/guni12/me-redovisa/badge.svg?branch=master)](https://coveralls.io/github/guni12/me-redovisa?branch=master)
