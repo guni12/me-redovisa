@@ -39,6 +39,12 @@ jobs:
             chown -R $USER:$USER ./db
             chmod +x db/reset_test_db.bash
 
+      - run:
+          name: move files
+          command: |
+            $(> ./db/test.sqlite)
+            sqlite3 ./db/test.sqlite < ./db/migrate.sql
+
 
       - run: # run tests
           name: test

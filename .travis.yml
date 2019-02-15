@@ -14,7 +14,6 @@ services:
 before_install:
     chown -R $USER:$USER ./db;
     chmod +x db/reset_test_db.bash;
-    sqlite3 ./db/test.sqlite < ./db/migrate.sql
 
 git:
     submodules: false
