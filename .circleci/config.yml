@@ -35,7 +35,9 @@ jobs:
 
       - run:
           name: permissions
-          command: chown -R $USER:$USER ./db
+          command: |
+            chown -R $USER:$USER ./db
+            chmod +x db/reset_test_db.bash
 
 
       - run: # run tests
